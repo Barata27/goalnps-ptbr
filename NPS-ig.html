@@ -421,7 +421,7 @@
                     </div>
                 </form>
                 <div id="thankYouMessage" class="thank-you hidden">
-                    Thank you for sharing your experience! We are always looking to improve for you. 😉
+                    Thank you for sharing your experience! We are always looking to improve our services for you. 😉
                 </div>
             </td>
         </tr>
@@ -450,7 +450,7 @@
 
             /*if (step === 1) {
                 if (!interactedRanges["npsScore"]) {
-                    alert("Por favor, selecione uma avaliação antes de continuar.");
+                    alert("Please select a rating before proceeding.");
                     isValid = false;
                 }
             } else*/ if (step === 2) {
@@ -462,14 +462,14 @@
             } else if (step === 3) {
                 const selectedNps = document.querySelector(".nps-container button.selected");
                 if (!selectedNps) {
-                    alert("Por favor, selecione uma pontuação antes de continuar.");
+                    alert("Please select a rating before proceeding.");
                     isValid = false;
                 }
             } /*else if (step === 4) {
                 const ranges = ["npsScore-prereserva", "npsScore-reserva", "npsScore-aposreserva", "npsScore-motorista", "npsScore-cordialidademoto", "npsScore-seguranca", "npsScore-conforto"];
                 for (let id of ranges) {
                     if (!interactedRanges[id]) {
-                        alert("Por favor, preencha todas as avaliações antes de continuar.");
+                        alert("Please select a rating before proceeding.");
                         isValid = false;
                         break;
                     }
@@ -477,7 +477,7 @@
             } */else if (step === 5) {
                 const retorno = document.querySelector('input[name="retorno"]:checked');
                 if (!retorno) {
-                    alert("Por favor, selecione uma opção antes de continuar.");
+                    alert("Please select a rating before proceeding.");
                     isValid = false;
                 }
             }
