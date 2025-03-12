@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Pesquisa de Satisfação</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .button {
+            background-color: #e7182d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /*Input range */
+        .range-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .range-label {
+            background: #e7182d;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 7px;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            max-width: 300px;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, white, red);
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #e7182d;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /*checkbox*/
+
+        input[type=checkbox] {
+            position: relative;
+            cursor: pointer;
+        }
+
+        /*Input checkbox */
+        input[type=checkbox] {
+            position: relative;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        input[type=checkbox]:before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            background-color: #dfdedf;
+        }
+
+        input[type=checkbox]:checked:before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            background-color: #e7182d;
+        }
+
+        input[type=checkbox]:checked:after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            position: absolute;
+            top: 2px;
+            left: 6px;
+        }
+
+        /*Selecionar*/
+        .nps-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 500px;
+            justify-self: center;
+        }
+
+        .nps-container button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            width: 40px;
+            line-height: 1;
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        /* Botão selecionado */
+        .nps-container button.selected {
+            background-color: #cc0000 !important;
+            color: white;
+            border: 1px solid black;
+        }
+
+        /*radio*/
+        /* Estiliza os labels como botões */
+        .step label {
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            border: 2px solid #ccc;
+            /* Borda cinza quando não selecionado */
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            background-color: #f9f9f9;
+            margin: 10px;
+        }
+
+        /* Quando o rádio for selecionado */
+        .step input[type="radio"]:checked+label {
+            color: red;
+            font-size: 1.2em;
+            /* Aumenta a fonte */
+            border: 2px solid red;
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+
+        /* Oculta os inputs de rádio */
+        .step input[type="radio"] {
+            display: none;
+        }
+
+        .container-selecao {
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.3sease-in-out;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            background-color: #f9f9f9;
+            margin: 10px;
+        }
+
+        .thank-you {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e7182d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<body style="font-family: Helvetica, sans-serif; background-color: #f4f5f6; margin: 0; padding: 20px;">
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+        style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; padding: 20px;">
+        <tr>
+            <td align="center">
+                <a target="_blank" href="https://goalprime.com/">
+                    <img alt="G4" src="https://goalprime.com/mail/email-header.jpg" width="100%"
+                        style="border-radius: 8px;">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" style="font-size: 18px; font-weight: bold;">Pesquisa de Satisfação</td>
+        </tr>
+        <tr>
+            <td style="font-size: 16px; text-align: center; padding: 10px 0;">
+                Agradecemos por escolher nossos serviços! <br>Sua opinião é muito importante para nós.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form id="surveyForm">
+                    <input type="hidden" name="cpr" value="">
+                    <input type="hidden" name="element" value="">
+                    <div class="step" id="step1">
+                        <div class="range-container">
+                            <p>1. Como você avalia sua experiência geral com nosso serviço?</p>
+                            <input type="range" id="npsScore" name="npsScore" min="1" max="6" step="1" value="1">
+                            <span id="rangeValue" class="range-label">Avalie</span>
+                        </div>
+                        <button type="button" class="button" onclick="nextStep(1)">Próximo</button>
+                    </div>
+
+                    <div class="step hidden" id="step2">
+                        <p>2. Quais foram as características do serviço utilizado?</p>
+                        <input type="checkbox" name="caracteristicas" value="Veículo blindado"> Veículo blindado <br>
+                        <input type="checkbox" name="caracteristicas" value="Veículo não-blindado"> Veículo
+                        não-blindado<br>
+                        <input type="checkbox" name="caracteristicas" value="Motorista monolíngue"> Motorista
+                        monolíngue<br>
+                        <input type="checkbox" name="caracteristicas" value="Motorista bilíngue"> Motorista bilíngue<br>
+                        <br><br>
+                        <button type="button" class="button" onclick="prevStep(2)">Voltar</button>
+                        <button type="button" class="button" onclick="nextStep(2)">Próximo</button>
+                    </div>
+
+                    <div class="step hidden" id="step3">
+                        <p>3. Qual é a pontuação de 0 a 10 que você daria para indicar nosso serviço a outra empresa?
+                        </p>
+                        <div class="nps-container">
+                            <button class="detractor" style="background-color: #f8e3e6">0</button>
+                            <button class="detractor" style="background-color: #fad3d9">1</button>
+                            <button class="detractor" style="background-color: #f9c4cd">2</button>
+                            <button class="detractor" style="background-color: #f8a8b6">3</button>
+                            <button class="detractor" style="background-color: #fba2b1">4</button>
+                            <button class="detractor" style="background-color: #ff869a">5</button>
+                            <button class="detractor" style="background-color: #ff869a">6</button>
+                            <button class="passive" style="background-color: #ff869a">7</button>
+                            <button class="passive" style="background-color: #ff869a">8</button>
+                            <button class="promoter" style="background-color: #d75f5f">9</button>
+                            <button class="promoter" style="background-color: #db4747">10</button>
+                        </div>
+                        <br><br>
+                        <button type="button" class="button" onclick="prevStep(3)">Voltar</button>
+                        <button type="button" class="button" onclick="nextStep(3)">Próximo</button>
+                    </div>
+
+                    <div class="step hidden" id="step4">
+                        <p>4. Como você avalia os seguintes aspectos do serviço?</p>
+                        <div class="container-selecao">
+                            <div class="range-container">
+                                <p><strong>Atendimento Comercial:</strong></p>
+                                <p>Pré-Reserva:</p>
+                                <input type="range" id="npsScore-prereserva" name="npsScore" min="1" max="5" step="1"
+                                    value="1">
+                                <span id="rangeValue-prereserva" class="range-label">Avalie</span>
+                            </div>
+
+                            <div class="range-container">
+                                <p>Durante a Reserva:</p>
+                                <input type="range" id="npsScore-reserva" name="npsScore" min="1" max="5" step="1"
+                                    value="1">
+                                <span id="rangeValue-reserva" class="range-label">Avalie</span>
+                            </div>
+
+                            <div class="range-container">
+                                <p>Após a Reserva:</p>
+                                <input type="range" id="npsScore-aposreserva" name="npsScore" min="1" max="5" step="1"
+                                    value="1">
+                                <div id="rangeValue-aposreserva" class="range-label">Avalie</div>
+                            </div>
+                        </div>
+
+                        <div class="container-selecao">
+                            <div class="range-container">
+                                <p><strong>Pontualidade do motorista:</strong></p>
+                                <input type="range" id="npsScore-motorista" name="npsScore" min="1" max="5" step="1"
+                                    value="1">
+                                <span id="rangeValue-motorista" class="range-label">Avalie</span>
+                            </div>
+                        </div>
+
+                        <div class="container-selecao">
+                            <div class="range-container">
+                                <p><strong>Cordialidade do motorista:</strong></p>
+                                <input type="range" id="npsScore-cordialidademoto" name="npsScore" min="1" max="5"
+                                    step="1" value="1">
+                                <span id="rangeValue-cordialidademoto" class="range-label">Avalie</span>
+                            </div>
+                        </div>
+
+                        <div class="container-selecao">
+                            <div class="range-container">
+                                <p><strong>Segurança durante o trajeto:</strong></p>
+                                <input type="range" id="npsScore-seguranca" name="npsScore" min="1" max="6" step="1"
+                                    value="1">
+                                <span id="rangeValue-seguranca" class="range-label">Avalie</span>
+                            </div>
+                        </div>
+
+                        <div class="container-selecao">
+                            <div class="range-container">
+                                <p><strong>Conforto e limpeza do veículo:</strong></p>
+                                <input type="range" id="npsScore-conforto" name="npsScore" min="1" max="6" step="1"
+                                    value="1">
+                                <span id="rangeValue-conforto" class="range-label">Avalie</span>
+                            </div>
+                        </div>
+
+                        <br><br><br>
+                        <button type="button" class="button" onclick="prevStep(4)">Voltar</button>
+                        <button type="button" class="button" onclick="nextStep(4)">Próximo</button>
+                    </div>
+
+                    <div class="step hidden" id="step5">
+                        <p>5. Você voltaria a utilizar nossos serviços?</p>
+
+                        <input type="radio" name="retorno" value="Sim" id="retorno-sim">
+                        <label for="retorno-sim">Sim, com certeza</label>
+
+                        <input type="radio" name="retorno" value="Talvez" id="retorno-talvez">
+                        <label for="retorno-talvez">Talvez</label>
+
+                        <input type="radio" name="retorno" value="Não" id="retorno-nao">
+                        <label for="retorno-nao">Não</label>
+
+                        <br><br>
+                        <button type="button" class="button" onclick="prevStep(5)">Voltar</button>
+                        <button type="button" class="button" onclick="nextStep(5)">Próximo</button>
+                    </div>
+                    <div class="step hidden" id="step6">
+                        <p>6. Alguma sugestão ou comentário? (Opcional)</p>
+                        <textarea id="comments" name="comments" rows="4"
+                            style="width: 554px; height: 157px; background-color: #d7d7d76a;"></textarea>
+                        <br><br>
+                        <button type="button" class="button" onclick="prevStep(6)">Voltar</button>
+                        <button type="submit" class="button" onclick="sendSurveyData()">Enviar Resposta</button>
+                    </div>
+                </form>
+                <div id="thankYouMessage" class="thank-you hidden">
+                    Obrigado por responder nossa pesquisa! Sua opinião é muito importante para nós. 😊
+                </div>
+            </td>
+        </tr>
+    </table>
+    <script>
+        //Steps
+        let interactedRanges = {};
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const rangeInputs = ["npsScore", "npsScore-prereserva", "npsScore-reserva", "npsScore-aposreserva", "npsScore-motorista", "npsScore-cordialidademoto", "npsScore-seguranca", "npsScore-conforto"];
+
+            rangeInputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    interactedRanges[id] = false;
+                    input.addEventListener("input", function () {
+                        interactedRanges[id] = true;
+                    });
+                }
+            });
+
+        });
+
+        function nextStep(step) {
+            let isValid = true;
+
+            if (step === 1) {
+                if (!interactedRanges["npsScore"]) {
+                    alert("Por favor, selecione uma avaliação antes de continuar.");
+                    isValid = false;
+                } if (document.getElementById("npsScore").value == 1) {
+                    alert("Por favor, selecione uma avaliação antes de continuar.");
+                    isValid = false;
+                }
+            } else if (step === 2) {
+                const checkboxes = document.querySelectorAll('input[name="caracteristicas"]:checked');
+                if (checkboxes.length === 0) {
+                    alert("Por favor, selecione pelo menos uma característica antes de continuar.");
+                    isValid = false;
+                }
+            } else if (step === 3) {
+                const selectedNps = document.querySelector(".nps-container button.selected");
+                if (!selectedNps) {
+                    alert("Por favor, selecione uma pontuação antes de continuar.");
+                    isValid = false;
+                }
+            } else if (step === 4) {
+                const ranges = ["npsScore-prereserva", "npsScore-reserva", "npsScore-aposreserva", "npsScore-motorista", "npsScore-cordialidademoto", "npsScore-seguranca", "npsScore-conforto"];
+                for (let id of ranges) {
+                    if (!interactedRanges[id]) {
+                        alert("Por favor, preencha todas as avaliações antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-prereserva").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-reserva").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-aposreserva").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-motorista").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-cordialidademoto").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-seguranca").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                    if (document.getElementById("npsScore-conforto").value == 1) {
+                        alert("Por favor, selecione uma avaliação antes de continuar.");
+                        isValid = false;
+                        break;
+                    }
+                }
+            } else if (step === 5) {
+                const retorno = document.querySelector('input[name="retorno"]:checked');
+                if (!retorno) {
+                    alert("Por favor, selecione uma opção antes de continuar.");
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                document.getElementById('step' + step).classList.add('hidden');
+                document.getElementById('step' + (step + 1)).classList.remove('hidden');
+            }
+        }
+
+        function prevStep(step) {
+            document.getElementById('step' + step).classList.add('hidden');
+            document.getElementById('step' + (step - 1)).classList.remove('hidden');
+        }
+
+        //input range
+        document.addEventListener("DOMContentLoaded", function () {
+            const rangeInput = document.getElementById("npsScore");
+            const rangeValue = document.getElementById("rangeValue");
+            const rangeInput_prereserva = document.getElementById("npsScore-prereserva");
+            const rangeValue_prereserva = document.getElementById("rangeValue-prereserva");
+            const rangeInput_reserva = document.getElementById("npsScore-reserva");
+            const rangeValue_reserva = document.getElementById("rangeValue-reserva");
+            const rangeInput_aposreserva = document.getElementById("npsScore-aposreserva");
+            const rangeValue_aposreserva = document.getElementById("rangeValue-aposreserva");
+            const rangeInput_motorista = document.getElementById("npsScore-motorista");
+            const rangeValue_motorista = document.getElementById("rangeValue-motorista");
+            const rangeInput_cordialidademoto = document.getElementById("npsScore-cordialidademoto");
+            const rangeValue_cordialidademoto = document.getElementById("rangeValue-cordialidademoto");
+            const rangeInput_seguranca = document.getElementById("npsScore-seguranca");
+            const rangeValue_seguranca = document.getElementById("rangeValue-seguranca");
+            const rangeInput_conforto = document.getElementById("npsScore-conforto");
+            const rangeValue_conforto = document.getElementById("rangeValue-conforto");
+            const labels = ["Avalie", "Péssima", "Ruim", "Regular", "Boa", "Excelente"];
+
+            //PERGUNTA 2
+            rangeInput.addEventListener("input", function () {
+                const value = parseInt(rangeInput.value, 10);
+                rangeValue.textContent = labels[value - 1];
+                rangeValue.style.display = "block";
+            });
+            rangeInput.addEventListener("change", function () {
+                rangeValue.style.display = "block";
+            });
+
+            //mOTORISTA
+            rangeInput_motorista.addEventListener("input", function () {
+                const value = parseInt(rangeInput_motorista.value, 10);
+                rangeValue_motorista.textContent = labels[value - 1];
+                rangeValue_motorista.style.display = "block";
+            });
+            rangeValue_motorista.addEventListener("change", function () {
+                rangeValue_motorista.style.display = "block";
+            });
+
+            //cordialidademoto
+            rangeInput_cordialidademoto.addEventListener("input", function () {
+                const value = parseInt(rangeInput_cordialidademoto.value, 10);
+                rangeValue_cordialidademoto.textContent = labels[value - 1];
+                rangeValue_cordialidademoto.style.display = "block";
+            });
+            rangeValue_cordialidademoto.addEventListener("change", function () {
+                rangeValue_cordialidademoto.style.display = "block";
+            });
+
+            //seguranca
+            rangeInput_seguranca.addEventListener("input", function () {
+                const value = parseInt(rangeInput_seguranca.value, 10);
+                rangeValue_seguranca.textContent = labels[value - 1];
+                rangeValue_seguranca.style.display = "block";
+            });
+            rangeValue_seguranca.addEventListener("change", function () {
+                rangeValue_seguranca.style.display = "block";
+            });
+
+            //conforto
+            rangeInput_conforto.addEventListener("input", function () {
+                const value = parseInt(rangeInput_conforto.value, 10);
+                rangeValue_conforto.textContent = labels[value - 1];
+                rangeValue_conforto.style.display = "block";
+            });
+            rangeValue_conforto.addEventListener("change", function () {
+                rangeValue_conforto.style.display = "block";
+            });
+
+            //PRE RESERVA
+            rangeInput_prereserva.addEventListener("input", function () {
+                const value = parseInt(rangeInput_prereserva.value, 10);
+                rangeValue_prereserva.textContent = labels[value - 1];
+                rangeValue_prereserva.style.display = "block";
+            });
+            rangeInput_prereserva.addEventListener("change", function () {
+                rangeValue_prereserva.style.display = "block";
+            });
+
+            //apos reserva
+            rangeInput_aposreserva.addEventListener("input", function () {
+                const value = parseInt(rangeInput_aposreserva.value, 10);
+                rangeValue_aposreserva.textContent = labels[value - 1];
+                rangeValue_aposreserva.style.display = "block";
+            });
+            rangeInput_aposreserva.addEventListener("change", function () {
+                rangeValue_aposreserva.style.display = "block";
+            });
+
+
+            //reserva
+            rangeInput_reserva.addEventListener("input", function () {
+                const value = parseInt(rangeInput_reserva.value, 10);
+                rangeValue_reserva.textContent = labels[value - 1];
+                rangeValue_reserva.style.display = "block";
+            });
+            rangeInput_reserva.addEventListener("change", function () {
+                rangeValue_reserva.style.display = "block";
+            });
+
+
+            const buttons = document.querySelectorAll(".nps-container button");
+
+            buttons.forEach(button => {
+                button.setAttribute("onclick", "selectButton(this)");
+            });
+
+        });
+
+        function selectButton(button) {
+            const buttons = document.querySelectorAll(".nps-container button");
+            buttons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            event.preventDefault(); // Impede o envio ou qualquer ação inesperada
+        }
+
+        //manda para o webhook
+        document.querySelector("form").addEventListener("submit", function (evento) {
+            evento.preventDefault();
+            sendSurveyData();
+        });
+
+        function sendSurveyData() {
+
+            // Captura o parâmetro 'cpr' da URL e define no input hidden
+            const urlParams = new URLSearchParams(window.location.search);
+            const cprValue = urlParams.get('cpr');
+            const elementValue = urlParams.get('element');
+
+            const data = {
+                npsScore: document.getElementById("npsScore").value,
+                caracteristicas: Array.from(document.querySelectorAll('input[name="caracteristicas"]:checked')).map(el => el.value),
+                npsPontuacao: document.querySelector(".nps-container button.selected")?.textContent || "",
+                npsPreReserva: document.getElementById("npsScore-prereserva").value,
+                npsReserva: document.getElementById("npsScore-reserva").value,
+                npsMotorista: document.getElementById("npsScore-motorista").value,
+                npsCordialidadeMotorista: document.getElementById("npsScore-cordialidademoto").value,
+                npsSeguranca: document.getElementById("npsScore-seguranca").value,
+                npsConforto: document.getElementById("npsScore-conforto").value,
+                npsAposReserva: document.getElementById("npsScore-aposreserva").value,
+                retorno: document.querySelector('input[name="retorno"]:checked')?.value || "",
+                comments: document.getElementById("comments")?.value || "",
+                cpr: document.getElementById("cprValue")?.value || "",
+                element: document.getElementById("elementValue")?.value || ""
+            };
+
+            setTimeout(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "https://hook.us1.make.com/tiowispuxhv7jirt7qkk3mcn626176uw",
+                    data: data,
+                    dataType: "json",
+                })
+
+                document.getElementById("surveyForm").classList.add("hidden");
+                document.getElementById("thankYouMessage").classList.remove("hidden");
+            }, 1000);
+        } 
+    </script>
+</body>
+
+</html>
