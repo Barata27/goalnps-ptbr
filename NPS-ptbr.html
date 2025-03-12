@@ -93,6 +93,16 @@
             background-color: #e7182d;
         }
 
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 300px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
         input[type=checkbox]:checked:after {
             content: "";
             display: block;
@@ -225,8 +235,15 @@
                     <div class="step" id="step1">
                         <div class="range-container">
                             <p>1. Como você avalia sua experiência geral com nosso serviço?</p>
-                            <input type="range" id="npsScore" name="npsScore" min="1" max="6" step="1" value="1">
-                            <span id="rangeValue" class="range-label">Avalie</span>
+                            <div class="range-labels">
+                                <span>Péssima</span>
+                                <span>Ruim</span>
+                                <span>Regular</span>
+                                <span>Boa</span>
+                                <span>Excelente</span>
+                            </div>
+                            <input type="range" id="npsScore" name="npsScore" min="1" max="5" step="1" value="1">
+                            <span id="rangeValue" class="range-label">Péssima</span>
                         </div>
                         <button type="button" class="button" onclick="nextStep(1)">Próximo</button>
                     </div>
@@ -271,59 +288,108 @@
                             <div class="range-container">
                                 <p><strong>Atendimento Comercial:</strong></p>
                                 <p>Pré-Reserva:</p>
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
                                 <input type="range" id="npsScore-prereserva" name="npsScore" min="1" max="5" step="1"
                                     value="1">
-                                <span id="rangeValue-prereserva" class="range-label">Avalie</span>
+                                <span id="rangeValue-prereserva" class="range-label">Péssima</span>
                             </div>
 
                             <div class="range-container">
                                 <p>Durante a Reserva:</p>
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
                                 <input type="range" id="npsScore-reserva" name="npsScore" min="1" max="5" step="1"
                                     value="1">
-                                <span id="rangeValue-reserva" class="range-label">Avalie</span>
+                                <span id="rangeValue-reserva" class="range-label">Péssima</span>
                             </div>
 
                             <div class="range-container">
                                 <p>Após a Reserva:</p>
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
                                 <input type="range" id="npsScore-aposreserva" name="npsScore" min="1" max="5" step="1"
                                     value="1">
-                                <div id="rangeValue-aposreserva" class="range-label">Avalie</div>
+                                <div id="rangeValue-aposreserva" class="range-label">Péssima</div>
                             </div>
                         </div>
 
                         <div class="container-selecao">
                             <div class="range-container">
                                 <p><strong>Pontualidade do motorista:</strong></p>
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
                                 <input type="range" id="npsScore-motorista" name="npsScore" min="1" max="5" step="1"
                                     value="1">
-                                <span id="rangeValue-motorista" class="range-label">Avalie</span>
+                                <span id="rangeValue-motorista" class="range-label">Péssima</span>
                             </div>
                         </div>
 
                         <div class="container-selecao">
                             <div class="range-container">
                                 <p><strong>Cordialidade do motorista:</strong></p>
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
                                 <input type="range" id="npsScore-cordialidademoto" name="npsScore" min="1" max="5"
                                     step="1" value="1">
-                                <span id="rangeValue-cordialidademoto" class="range-label">Avalie</span>
+                                <span id="rangeValue-cordialidademoto" class="range-label">Péssima</span>
                             </div>
                         </div>
 
                         <div class="container-selecao">
                             <div class="range-container">
                                 <p><strong>Segurança durante o trajeto:</strong></p>
-                                <input type="range" id="npsScore-seguranca" name="npsScore" min="1" max="6" step="1"
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
+                                <input type="range" id="npsScore-seguranca" name="npsScore" min="1" max="5" step="1"
                                     value="1">
-                                <span id="rangeValue-seguranca" class="range-label">Avalie</span>
+                                <span id="rangeValue-seguranca" class="range-label">Péssima</span>
                             </div>
                         </div>
 
                         <div class="container-selecao">
                             <div class="range-container">
                                 <p><strong>Conforto e limpeza do veículo:</strong></p>
-                                <input type="range" id="npsScore-conforto" name="npsScore" min="1" max="6" step="1"
+                                <div class="range-labels">
+                                    <span>Péssima</span>
+                                    <span>Ruim</span>
+                                    <span>Regular</span>
+                                    <span>Boa</span>
+                                    <span>Excelente</span>
+                                </div>
+                                <input type="range" id="npsScore-conforto" name="npsScore" min="1" max="5" step="1"
                                     value="1">
-                                <span id="rangeValue-conforto" class="range-label">Avalie</span>
+                                <span id="rangeValue-conforto" class="range-label">Péssima</span>
                             </div>
                         </div>
 
@@ -358,7 +424,7 @@
                     </div>
                 </form>
                 <div id="thankYouMessage" class="thank-you hidden">
-                    Obrigado por responder nossa pesquisa! Sua opinião é muito importante para nós. 😊
+                    Agradecemos por compartilhar sua experiência! Estamos sempre buscando melhorar para você. 😉
                 </div>
             </td>
         </tr>
@@ -389,9 +455,6 @@
                 if (!interactedRanges["npsScore"]) {
                     alert("Por favor, selecione uma avaliação antes de continuar.");
                     isValid = false;
-                } if (document.getElementById("npsScore").value == 1) {
-                    alert("Por favor, selecione uma avaliação antes de continuar.");
-                    isValid = false;
                 }
             } else if (step === 2) {
                 const checkboxes = document.querySelectorAll('input[name="caracteristicas"]:checked');
@@ -410,41 +473,6 @@
                 for (let id of ranges) {
                     if (!interactedRanges[id]) {
                         alert("Por favor, preencha todas as avaliações antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-prereserva").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-reserva").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-aposreserva").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-motorista").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-cordialidademoto").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-seguranca").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
-                        isValid = false;
-                        break;
-                    }
-                    if (document.getElementById("npsScore-conforto").value == 1) {
-                        alert("Por favor, selecione uma avaliação antes de continuar.");
                         isValid = false;
                         break;
                     }
@@ -486,7 +514,7 @@
             const rangeValue_seguranca = document.getElementById("rangeValue-seguranca");
             const rangeInput_conforto = document.getElementById("npsScore-conforto");
             const rangeValue_conforto = document.getElementById("rangeValue-conforto");
-            const labels = ["Avalie", "Péssima", "Ruim", "Regular", "Boa", "Excelente"];
+            const labels = [/*"Péssima", */"Péssima", "Ruim", "Regular", "Boa", "Excelente"];
 
             //PERGUNTA 2
             rangeInput.addEventListener("input", function () {
