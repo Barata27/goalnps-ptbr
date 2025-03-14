@@ -656,8 +656,8 @@
                 npsAposReserva: document.getElementById("npsScore-aposreserva").value,
                 retorno: document.querySelector('input[name="retorno"]:checked')?.value || "",
                 comments: document.getElementById("comments")?.value || "",
-                cpr: document.getElementById("cprValue")?.value || "",
-                element: document.getElementById("elementValue")?.value || ""
+                cpr: cprValue,
+                element: elementValue
             };
 
             setTimeout(function () {
