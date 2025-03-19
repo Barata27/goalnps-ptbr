@@ -428,12 +428,49 @@
                         <button type="button" class="button" onclick="prevStep(5)">Prev</button>
                         <button type="button" class="button" onclick="nextStep(5)">Next</button>
                     </div>
+
                     <div class="step hidden" id="step6">
-                        <p>6. Any suggestions or comments? (Optional)</p>
+                        <p>6. Please, tell us how you heard about Goal Prime:</p>
+                    
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Indicação" id="origem-indicacao">
+                            <label for="origem-indicacao" style="margin-left: 5px; width: 150px;">Recommendation </label>
+                            <input type="text" id="indicacao-detalhe" name="indicacao-detalhe" placeholder="Especifique"  style="flex: 1;    padding: 10px;">
+                        </div>
+                    
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Site de Procura" id="origem-site">
+                            <label for="origem-site" style="margin-left: 5px; width: 150px;">Search Website</label>
+                            <input type="text" id="site-detalhe" name="site-detalhe" placeholder="Especifique"  style="flex: 1;    padding: 10px;">
+                        </div>
+                    
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Rede Social" id="origem-social">
+                            <label for="origem-social" style="margin-left: 5px; width: 150px;">Social Media</label>
+                            <input type="text" id="social-detalhe" name="social-detalhe" placeholder="Especifique"  style="flex: 1;    padding: 10px;">
+                        </div>
+                    
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Evento" id="origem-evento">
+                            <label for="origem-evento" style="margin-left: 5px; width: 150px;">Event </label>
+                            <input type="text" id="evento-detalhe" name="evento-detalhe" placeholder="Especifique" style="flex: 1;    padding: 10px;">
+                        </div>
+                    
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Outro" id="origem-outro">
+                            <label for="origem-outro" style="margin-left: 5px; width: 150px;">Other </label>
+                            <input type="text" id="outro-detalhe" name="outro-detalhe" placeholder="Especifique"  style="flex: 1;    padding: 10px;">
+                        </div>
+                    
+                        <br>
+                        <button type="button" class="button" onclick="prevStep(6)">Voltar</button>
+                        <button type="button" class="button" onclick="nextStep(6)">Próximo</button>
+                    <div class="step hidden" id="step7">
+                        <p>7. Any suggestions or comments? (Optional)</p>
                         <textarea id="comments" name="comments" rows="4"
                             style="width: 554px; height: 157px; background-color: #d7d7d76a;"></textarea>
                         <br><br>
-                        <button type="button" class="button" onclick="prevStep(6)">Prev</button>
+                        <button type="button" class="button" onclick="prevStep(7)">Prev</button>
                         <button type="submit" class="button" onclick="sendSurveyData()">Enviar Resposta</button>
                     </div>
                 </form>
@@ -653,8 +690,10 @@
                 npsAposReserva: document.getElementById("npsScore-aposreserva").value,
                 retorno: document.querySelector('input[name="retorno"]:checked')?.value || "",
                 comments: document.getElementById("comments")?.value || "",
-                cpr: cprValue,
-                element: elementValue
+                origem: origemSelecionada,
+                origemDetalhe: origemDetalhe,
+                cpr: cprValue || "",
+                element: elementValue || ""
             };
 
             setTimeout(function () {
