@@ -37,8 +37,9 @@
             margin: 7px;
         }
 
-        .range-container, .nps-container {
-           /* display: flex;
+        .range-container,
+        .nps-container {
+            /* display: flex;
             flex-direction: column;*/
             align-items: center;
             width: 100%;
@@ -129,7 +130,7 @@
 
         /*Selecionar*/
         .nps-container {
-          /*  display: flex;
+            /*  display: flex;
             justify-content: space-between;
             width: 100%;
             max-width: 500px;
@@ -141,7 +142,7 @@
         }
 
         .nps-container button {
-          /*  display: flex;
+            /*  display: flex;
             justify-content: center;
             align-items: center;
             height: 40px;
@@ -432,11 +433,53 @@
                         <button type="button" class="button" onclick="nextStep(5)">Próximo</button>
                     </div>
                     <div class="step hidden" id="step6">
-                        <p>6. Alguma sugestão ou comentário? (Opcional)</p>
-                        <textarea id="comments" name="comments" rows="4"
-                        style="width: 100%; height: 100px; background-color: #d7d7d76a;"></textarea>
-                        <br><br>
+                        <p>6. Por gentileza, diga-nos como conheceu a Goal Prime:</p>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Indicação" id="origem-indicacao">
+                            <label for="origem-indicacao" style="margin-left: 5px; width: 150px;">Indicação</label>
+                            <input type="text" id="indicacao-detalhe" name="indicacao-detalhe" placeholder="Especifique"
+                                style="flex: 1;    padding: 10px;">
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Site de Procura" id="origem-site">
+                            <label for="origem-site" style="margin-left: 5px; width: 150px;">Site de Procura</label>
+                            <input type="text" id="site-detalhe" name="site-detalhe" placeholder="Especifique"
+                                style="flex: 1;    padding: 10px;">
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Rede Social" id="origem-social">
+                            <label for="origem-social" style="margin-left: 5px; width: 150px;">Rede Social</label>
+                            <input type="text" id="social-detalhe" name="social-detalhe" placeholder="Especifique"
+                                style="flex: 1;    padding: 10px;">
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Evento" id="origem-evento">
+                            <label for="origem-evento" style="margin-left: 5px; width: 150px;">Evento</label>
+                            <input type="text" id="evento-detalhe" name="evento-detalhe" placeholder="Especifique"
+                                style="flex: 1;    padding: 10px;">
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="radio" name="origem" value="Outro" id="origem-outro">
+                            <label for="origem-outro" style="margin-left: 5px; width: 150px;">Outro</label>
+                            <input type="text" id="outro-detalhe" name="outro-detalhe" placeholder="Especifique"
+                                style="flex: 1;    padding: 10px;">
+                        </div>
+
+                        <br>
                         <button type="button" class="button" onclick="prevStep(6)">Voltar</button>
+                        <button type="button" class="button" onclick="nextStep(6)">Próximo</button>
+                    </div>
+                    <div class="step hidden" id="step7">
+                        <p>7. Alguma sugestão ou comentário? (Opcional)</p>
+                        <textarea id="comments" name="comments" rows="4"
+                            style="width: 100%; height: 100px; background-color: #d7d7d76a;"></textarea>
+                        <br><br>
+                        <button type="button" class="button" onclick="prevStep(7)">Voltar</button>
                         <button type="submit" class="button" onclick="sendSurveyData()">Enviar Resposta</button>
                     </div>
                 </form>
@@ -643,6 +686,28 @@
             const cprValue = urlParams.get('cpr');
             const elementValue = urlParams.get('element');
 
+            // Captura a opção selecionada e o detalhe (caso tenha sido preenchido)
+            const origemSelecionada = document.querySelector('input[name="origem"]:checked')?.value || "";
+            let origemDetalhe = "";
+
+            switch (origemSelecionada) {
+                case "Indicação":
+                    origemDetalhe = document.getElementById("indicacao-detalhe").value;
+                    break;
+                case "Site de Procura":
+                    origemDetalhe = document.getElementById("site-detalhe").value;
+                    break;
+                case "Rede Social":
+                    origemDetalhe = document.getElementById("social-detalhe").value;
+                    break;
+                case "Evento":
+                    origemDetalhe = document.getElementById("evento-detalhe").value;
+                    break;
+                case "Outro":
+                    origemDetalhe = document.getElementById("outro-detalhe").value;
+                    break;
+            }
+
             const data = {
                 npsScore: document.getElementById("npsScore").value,
                 caracteristicas: Array.from(document.querySelectorAll('input[name="caracteristicas"]:checked')).map(el => el.value),
@@ -656,8 +721,10 @@
                 npsAposReserva: document.getElementById("npsScore-aposreserva").value,
                 retorno: document.querySelector('input[name="retorno"]:checked')?.value || "",
                 comments: document.getElementById("comments")?.value || "",
-                cpr: cprValue,
-                element: elementValue
+                origem: origemSelecionada,
+                origemDetalhe: origemDetalhe,
+                cpr: cprValue || "",
+                element: elementValue || ""
             };
 
             setTimeout(function () {
@@ -666,12 +733,13 @@
                     url: "https://hook.us1.make.com/tiowispuxhv7jirt7qkk3mcn626176uw",
                     data: data,
                     dataType: "json",
-                })
+                });
 
                 document.getElementById("surveyForm").classList.add("hidden");
                 document.getElementById("thankYouMessage").classList.remove("hidden");
             }, 1000);
-        } 
+        }
+
     </script>
 </body>
 
